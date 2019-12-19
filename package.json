@@ -4,8 +4,17 @@
   "description": "App for supporting Vaccination Process",
   "main": "app.js",
   "scripts": {
-    "test": "node app.js"
+    "test": "node app.js",
+    "devStart": "xdg-open https://localhost:3000 && nodemon app.js"
   },
   "author": "raxraj",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "https": "^1.0.0",
+    "mongoose": "^5.8.1",
+    "nodemon": "^2.0.2"
+  }
 }
