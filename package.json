@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "node app.js",
-    "devStart": "xdg-open https://localhost:3000 && nodemon app.js"
+    "devStart": "nodemon app.js"
   },
   "author": "raxraj",
   "license": "ISC",
