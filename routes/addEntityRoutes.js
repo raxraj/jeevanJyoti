@@ -21,7 +21,7 @@ router.post('/addDoctor', (req, res) => {
 })
 
 router.post('/addChild', (req, res) => {
-    
+
     new childCollection(makeChildParams(req.body)).save((err) => {
         if (err) {
             res.send(err)
@@ -31,83 +31,77 @@ router.post('/addChild', (req, res) => {
     })
 })
 
-//Useful Functions
+// Useful Functions
 
-function makeChildParams(initData){
-    initData.dob = Date.parse(initData.dob)
+function makeChildParams(initData) {
+    initData.dob = new Date(initData.dob)
+    
     let data = initData;
-    
-    data.vaccine_1 = {
-        name: 'BCG',
-        date: new Date(data.dob),
-        given : initData.bcg
-    }
-    data.vaccine_2 = {
-        name: 'OPV-0',
-        date: new Date(data.dob),
-        given : initData.opv0
-    }
-    data.vaccine_3 = {
-        name: 'PENTA-1',
-        date: new Date(data.dob),
-    }
-    data.vaccine_4 = {
-        name: 'OPV-2',
-        date: new Date(data.dob),
-    }
-    data.vaccine_5 = {
-        name: 'PENTA-2',
-        date: new Date(data.dob),
-    }
-    data.vaccine_6 = {
-        name: 'OPV-3',
-        date: new Date(data.dob),
-    }
-    data.vaccine_7 = {
-        name: 'PENTA-3',
-        date: new Date(data.dob),
-    }
-    data.vaccine_8 = {
-        name: 'IPV',
-        date: new Date(data.dob),
-    }
-    data.vaccine_9 = {
-        name: 'MMR-1',
-        date: new Date(data.dob),
-    }
-    data.vaccine_10 = {
-        name: 'OPV BOOSTER',
-        date: new Date(data.dob),
-    }
-    data.vaccine_11 = {
-        name: 'DPT 1st BOOSTER',
-        date: new Date(data.dob),
-    }
-    data.vaccine_12 = {
-        name: 'DPT 2nd BOOSTER',
-        date: new Date(data.dob),
-    }
-    data.vaccine_13 = {
-        name: 'TT-1',
-        date: new Date(data.dob),
-    }
-    
-    
 
-    data.vaccine_1.date.setDate(data.vaccine_1.date.getDate())
-    data.vaccine_2.date.setDate(data.vaccine_1.date.getDate())
-    data.vaccine_3.date.setDate(data.vaccine_1.date.getDate()+42)
-    data.vaccine_4.date.setDate(data.vaccine_1.date.getDate()+42)
-    data.vaccine_5.date.setDate(data.vaccine_1.date.getDate()+70)
-    data.vaccine_6.date.setDate(data.vaccine_1.date.getDate()+70)
-    data.vaccine_7.date.setDate(data.vaccine_1.date.getDate()+(14*7))
-    data.vaccine_8.date.setDate(data.vaccine_1.date.getDate()+(14*7))
-    data.vaccine_9.date.setDate(data.vaccine_1.date.getDate()+(14*7))
-    data.vaccine_10.date.setDate(data.vaccine_1.date.getDate()+(9*4*7))
-    data.vaccine_11.date.setDate(data.vaccine_1.date.getDate()+16*4*7)
-    data.vaccine_12.date.setDate(data.vaccine_1.date.getDate()+5*365)
-    data.vaccine_13.date.setDate(data.vaccine_1.date.getDate()+10*365)
+    data.vaccines = [
+        {
+            name: 'BCG, OPV-0 & Hepatitis B',
+            date: new Date(data.dob),
+            given: initData.firstDosage
+        }, {
+            name: 'OPV-1 & Penta-1',
+            date: new Date(data.dob)
+        }, {
+            name: 'OPV-2 & Penta-2',
+            date: new Date(data.dob)
+        }, {
+            name: 'OPV-3, Penta-3 & IPV',
+            date: new Date(data.dob)
+        }, {
+            name: 'MMR-1',
+            date: new Date(data.dob)
+        }, {
+            name: 'OPV Booster, DPT 1st Booster',
+            date: new Date(data.dob)
+        }, {
+            name: 'DPT 2nd Booster',
+            date: new Date(data.dob)
+        }, {
+            name: 'TT-1',
+            date: new Date(data.dob)
+        }, {
+            name: 'TT-2',
+            date: new Date(data.dob)
+        },
+    ]
+
+    var daysToAdd = [
+        0,
+        42,
+        70,
+        98,
+        252,
+        448,
+        1825,
+        3650,
+        5475
+    ]
+
+    daysToAdd.forEach((item, index) => {
+        data.vaccines[index].date.setDate(data.vaccines[index].date.getDate() + item)
+    })
+
+    data.nextVaccine = nextVaccine(data.vaccines);
+
     return data;
+}
+
+function nextVaccine(vaccines){
+    for(i=0; i<vaccines.length; i++){
+        if(!vaccines[i].given){
+            return vaccines[i]
+            //return this Vaccine
+        }
+        else{
+            continue
+        }
+    }
+    return null
 }
 
 

@@ -23,7 +23,24 @@ const childSchema = new Schema({
         type: Date,
         required: true
     },
-    vaccine_1: {
+    vaccines: [
+        {
+            name: {
+                type: String,
+                required: true
+            },
+            date: {
+                type: Date,
+                required: true
+            },
+            given: {
+                type: Boolean,
+                required: true,
+                default: false
+            }
+        }
+    ],
+    nextVaccine: {
         name: {
             type: String,
             required: true
@@ -35,192 +52,15 @@ const childSchema = new Schema({
         given: {
             type: Boolean,
             required: true,
-            default  :false
+            default: false
         }
     },
-    vaccine_2: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_3: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_4: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_5: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_6: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_7: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_8: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_9: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_10: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_11: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_12: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    vaccine_13: {
-        name: {
-            type: String,
-            required: true
-        },
-        date: {
-            type: Date,
-            required: true
-        },
-        given: {
-            type: Boolean,
-            required: true,
-            default  :false
-        }
-    },
-    
+    doctor_id: {
+        type: String,
+        required: true
+    }
 })
 
-const childModel = mongoose.model('children',childSchema)
+const childModel = mongoose.model('children', childSchema)
 
 module.exports = childModel

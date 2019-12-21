@@ -29,6 +29,7 @@ try {
 // FILES REQUIRED
 const loginRoutes = require('./routes/loginRoutes')
 const addEntityRoutes = require('./routes/addEntityRoutes')
+const functionalityRoutes = require('./routes/functionalityRoutes')
 
 
 // REQUIRED VARIABLES
@@ -45,6 +46,7 @@ app.use(body_parser.json())
 // APP ROUTES
 app.use('/user/', loginRoutes);
 app.use('/user/', addEntityRoutes);
+app.use('/function/', functionalityRoutes);
 
 
 
