@@ -26,32 +26,37 @@ try {
     console.error(error);
 }
 
+
+//APP MIDDLEWARE
+    //BODY PARSER
+app.use(body_parser.urlencoded({extended: false}))
+app.use(body_parser.json())
+    //VIEW ENGINE
+app.set('view engine', 'ejs')
+    //PUBLIC FOLDER
+app.use(express.static(__dirname+'/public'))
+
 // FILES REQUIRED
 const loginRoutes = require('./routes/loginRoutes')
 const addEntityRoutes = require('./routes/addEntityRoutes')
 const functionalityRoutes = require('./routes/functionalityRoutes')
+const userRoutes = require('./routes/userRoutes')
 
 
 // REQUIRED VARIABLES
 let port = process.env.PORT || 3000
 
 
-//APP MIDDLEWARE
-    //BODY PARSER
-app.use(body_parser.urlencoded({extended: false}))
-app.use(body_parser.json())
-
-
-
 // APP ROUTES
 app.use('/user/', loginRoutes);
 app.use('/user/', addEntityRoutes);
+app.use('/user/', userRoutes);
 app.use('/function/', functionalityRoutes);
 
 
 
 app.get('/', function (req, res) {
-    res.send('hello world')
+    res.redirect('/user/dashboard')
 })
 
 https.createServer({

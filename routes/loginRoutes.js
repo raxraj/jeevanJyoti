@@ -2,8 +2,8 @@ var express = require('express')
 var router = express.Router();
 
 
-router.get('/about',(req,res)=>{
-    res.send('THIS IS RESPONSE')
+router.post('/login' , (req,res)=>{
+    res.redirect('/user/dashboard')
 })
 
 
