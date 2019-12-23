@@ -59,9 +59,7 @@ app.get('/', function (req, res) {
     res.redirect('/user/dashboard')
 })
 
-https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')
-}, app).listen(port, function () {
-    console.log('Listening on Port 3000')
+app.listen(port,()=>{
+    console.log("Server Listening on "+port);
+    
 })
