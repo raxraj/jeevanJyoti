@@ -21,12 +21,13 @@ router.post('/addDoctor', (req, res) => {
 })
 
 router.post('/addChild', (req, res) => {
+    console.log(req.body);
 
     new childCollection(makeChildParams(req.body)).save((err) => {
         if (err) {
             res.send(err)
         } else {
-            res.send('Data Added')
+            res.send({done: true, message: 'Succesfully added the Child'})
         }
     })
 })
@@ -35,7 +36,8 @@ router.post('/addChild', (req, res) => {
 
 function makeChildParams(initData) {
     initData.dob = new Date(initData.dob)
-    
+
+
     let data = initData;
 
     data.vaccines = [
@@ -87,17 +89,16 @@ function makeChildParams(initData) {
     })
 
     data.nextVaccine = nextVaccine(data.vaccines);
-
+    data.child_id = data.fatherName.toUpperCase().slice(0, 3) + data.motherName.toUpperCase().slice(0, 3) + data.parentContact.slice(0, 5);
     return data;
 }
 
-function nextVaccine(vaccines){
-    for(i=0; i<vaccines.length; i++){
-        if(!vaccines[i].given){
+function nextVaccine(vaccines) {
+    for (i = 0; i < vaccines.length; i ++) {
+        if (! vaccines[i].given) {
             return vaccines[i]
-            //return this Vaccine
-        }
-        else{
+            // return this Vaccine
+        } else {
             continue
         }
     }

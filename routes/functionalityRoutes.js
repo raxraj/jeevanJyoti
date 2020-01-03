@@ -7,7 +7,7 @@ var childCollection = require('../models/childCollection')
 const messageSender = require('../messageSender')
 
 
-router.post('/sendMessage', (req, res) => {
+router.post('/sendMessages', (req, res) => {
     var docId = req.body.doctor_id;
     req.body.queryDate = new Date(req.body.queryDate)
     console.log(req.body.queryDate);
@@ -27,6 +27,27 @@ router.post('/sendMessage', (req, res) => {
             res.send({done : true,message: 'Messages has been send'})
         } else { // RETURN ERROR
             res.send({done: false, message: 'Doctor not registered.'})
+        }
+    })
+})
+
+router.post('/loadChild',(req,res)=>{
+    childCollection.findOne({child_id : req.body.child_id}).then((child)=>{
+        res.send(child)
+    })
+})
+
+router.post('/markVaccineGiven' ,(req,res)=>{
+    childCollection.findOne({child_id : req.body.child_id}).then((child)=>{
+        if(child){
+            var indexNextVacc = nextVaccine(child.vaccines)
+            child.vaccines[indexNextVacc].given = true;
+            child.nextVaccine = child.vaccines[indexNextVacc+1]
+            child.save()
+            res.send({done:true})
+        }
+        else{
+            res.send({done:false})
         }
     })
 })
@@ -68,6 +89,18 @@ function dateString(date){
     }
 
     return day+" "+date.getDate()+" "+month+", "+date.getFullYear()
+}
+
+function nextVaccine(vaccines) {
+    for (i = 0; i < vaccines.length; i ++) {
+        if (! vaccines[i].given) {
+            return i
+            // return this Vaccine
+        } else {
+            continue
+        }
+    }
+    return null
 }
 
 // EXPORT THE ROUTES

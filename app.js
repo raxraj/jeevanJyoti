@@ -1,9 +1,7 @@
 var express = require('express')
-var fs = require('fs')
-var https = require('https')
 var dotenv = require('dotenv')
 const mongoose = require('mongoose')
-const body_parser = require('body-parser')
+var body_parser = require('body-parser')
 
 
 //MODELS
@@ -52,6 +50,10 @@ app.use('/user/', loginRoutes);
 app.use('/user/', addEntityRoutes);
 app.use('/user/', userRoutes);
 app.use('/function/', functionalityRoutes);
+
+//BODY PARSER MIDDLEWARE
+
+
 
 
 

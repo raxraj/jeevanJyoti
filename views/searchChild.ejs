@@ -123,8 +123,8 @@
                     </div>
                   </div>
                 </div>
-                <center><button class="btn btn-primary">Search</button></center>
               </form>
+              <center><button class="btn btn-primary" onclick="loadChild()">Search</button></center>
             </div>
             <div class="table-responsive">
               <table class="table align-items-center">
@@ -190,8 +190,8 @@
               </tr>
                   </tbody>
                   </table>
-                  <center><button class="btn btn-success mb-5">Mark Vaccine Given</button></center>
           </div>
+          <center><button class="btn btn-success mb-5" onclick="markVaccineGiven()">Mark Vaccine Given</button></center>
           
           
           </div>
@@ -205,6 +205,7 @@
   <!--   Optional JS   -->
   <script src="../assets/js/plugins/chart.js/dist/Chart.min.js"></script>
   <script src="../assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+  <script src="../requester.js"></script>
   <!--   Argon JS   -->
   <script src="../assets/js/argon-dashboard.min.js?v=1.1.1"></script>
   <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
