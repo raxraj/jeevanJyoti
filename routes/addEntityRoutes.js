@@ -5,8 +5,12 @@ var router = express.Router();
 var doctorCollection = require('../models/doctorCollection')
 var childCollection = require('../models/childCollection')
 
+const authCheckers = require('../authFunctions')
 
-router.post('/addDoctor', (req, res) => {
+const checkAuthenticated = authCheckers.checkAuthenticated;
+
+
+router.post('/addDoctor',checkAuthenticated, (req, res) => {
     bcrypt.hash(req.body.doctorPass, 10).then((hash) => {
         req.body.doctorPass = hash;
         new doctorCollection(req.body).save((err) => {
@@ -20,7 +24,7 @@ router.post('/addDoctor', (req, res) => {
     })
 })
 
-router.post('/addChild', (req, res) => {
+router.post('/addChild', checkAuthenticated, (req, res) => {
     console.log(req.body);
 
     new childCollection(makeChildParams(req.body)).save((err) => {
