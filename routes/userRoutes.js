@@ -6,17 +6,20 @@ const authCheckers = require('../authFunctions')
 
 const checkAuthenticated = authCheckers.checkAuthenticated;
 
-router.get('/dashboard',checkAuthenticated, (req,res)=>{
-    res.render('index.ejs')
+router.get('/dashboard', checkAuthenticated, (req, res) => {
+    res.render('index.ejs', {doctor_id: req.user.doctor_id})
 })
-router.get('/addChild',checkAuthenticated, (req,res)=>{
-    res.render('addChild.ejs')
+
+router.get('/addChild', checkAuthenticated, (req, res) => {
+    res.render('addChild.ejs', {doctor_id: req.user.doctor_id})
 })
-router.get('/searchChild',checkAuthenticated,(req,res)=>{
-    res.render('searchChild.ejs')
+
+router.get('/searchChild', checkAuthenticated, (req, res) => {
+    res.render('searchChild.ejs', {doctor_id: req.user.doctor_id})
 })
-router.get('/sendMessagesPage',checkAuthenticated, (req,res)=>{
-    res.render('sendMessages.ejs')
+
+router.get('/sendMessagesPage', checkAuthenticated, (req, res) => {
+    res.render('sendMessages.ejs', {doctor_id: req.user.doctor_id})
 })
 
 module.exports = router;

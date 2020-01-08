@@ -47,17 +47,17 @@ app.use(body_parser.json())
 app.set('view engine', 'ejs')
     //PUBLIC FOLDER
 app.use(express.static(__dirname+'/public'))
-app.use(passport.initialize())
-app.use(passport.session())
-app.use(flash())
 app.use(session({
     secret : 'SOME$ecre!',
     resave : false,
     saveUninitialized : false
 }))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(flash())
+
 
 // FILES REQUIRED
-const loginRoutes = require('./routes/loginRoutes')
 const addEntityRoutes = require('./routes/addEntityRoutes')
 const functionalityRoutes = require('./routes/functionalityRoutes')
 const userRoutes = require('./routes/userRoutes')
@@ -67,13 +67,10 @@ const initializePassport = require("./passportConfig")
 
 initializePassport(passport , 
     username=>doctorCollection.findOne({doctor_id : username}).then(foundDoc=>foundDoc),
-    id => doctorCollection.findOne({_id : id}).then(user=>user)
+    id => doctorCollection.findById(id).then(user=>user)
 )
+
 const authCheckers = require('./authFunctions')
-
-
-
-
 const checkUnAuthenticated = authCheckers.checkUnAuthenticated;
 
 
@@ -84,18 +81,22 @@ let port = process.env.PORT || 3000
 
 
 // APP ROUTES
-app.use('/user/', loginRoutes);
 app.use('/user/', addEntityRoutes);
 app.use('/user/', userRoutes);
 app.use('/function/', functionalityRoutes);
 
 
 
-app.post("/user/login",checkUnAuthenticated, passport.authenticate('local', {
+app.post("/user/login", passport.authenticate('local', {
     successRedirect : '/user/dashboard',
     failureRedirect : '/',
     failureFlash:true
 }))
+
+// app.post('/user/login',(req,res)=>{
+//     console.log(req.body);
+//     res.send("DONE")
+// })
 
 
 app.get('/', checkUnAuthenticated, function (req, res) {
