@@ -6,10 +6,13 @@ var doctorCollection = require('../models/doctorCollection')
 var childCollection = require('../models/childCollection')
 const messageSender = require('../messageSender')
 
+const authCheckers = require('../authFunctions')
 
-router.post('/sendMessages', (req, res) => {
+const checkAuthenticated = authCheckers.checkAuthenticated;
+
+router.post('/sendMessages', checkAuthenticated, (req, res) => {
     var docId = req.body.doctor_id;
-    req.body.queryDate = new Date(req.body.queryDate)
+    req.body.queryDate = new Date()
     console.log(req.body.queryDate);
     doctorCollection.findOne({doctor_id: docId}).then((foundDoctor) => {
         if (foundDoctor) { // SEND MESSAGES BASED ON DATES
@@ -31,13 +34,13 @@ router.post('/sendMessages', (req, res) => {
     })
 })
 
-router.post('/loadChild',(req,res)=>{
+router.post('/loadChild',checkAuthenticated,(req,res)=>{
     childCollection.findOne({child_id : req.body.child_id}).then((child)=>{
         res.send(child)
     })
 })
 
-router.post('/markVaccineGiven' ,(req,res)=>{
+router.post('/markVaccineGiven' ,checkAuthenticated,(req,res)=>{
     childCollection.findOne({child_id : req.body.child_id}).then((child)=>{
         if(child){
             var indexNextVacc = nextVaccine(child.vaccines)
