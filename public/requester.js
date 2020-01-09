@@ -1,3 +1,7 @@
+$('#modal-notification').modal({ show: false})
+
+
+
 function addChild() { // ALLFIELDS'
     var fatherName = document.getElementById('fatherName').value;
     var motherName = document.getElementById('motherName').value;
@@ -14,10 +18,20 @@ function addChild() { // ALLFIELDS'
     var reqData = JSON.stringify({fatherName: fatherName, motherName: motherName, parentContact: parentContact, dob: dob, doctor_id: doctor_id , firstDosage : true})
     xhr.addEventListener('load' ,()=>{
         if(xhr.response.done){
-            alert(xhr.response.message)
+            
+            $('#modal-notification').modal({show:true})
+            document.getElementById('modal-content').classList.remove('bg-gradient-danger');
+            document.getElementById('modal-content').classList.add('bg-gradient-success');
+            document.getElementById('modal-title').innerHTML = 'Success'
+            document.getElementById('modal-text').innerHTML = 'The Child has been successfully registered. Child ID is '+xhr.response.child_id;
         }
         else{
-            alert(xhr.response.message)
+            $('#modal-notification').modal({show:true})
+            document.getElementById('modal-title').innerHTML = 'Failure'
+            document.getElementById('modal-text').innerHTML = xhr.response.message;
+            document.getElementById('modal-content').classList.add('bg-gradient-danger');
+            document.getElementById('modal-content').classList.remove('bg-gradient-success');
+
         }
     })
     xhr.send(reqData)
@@ -40,7 +54,11 @@ function loadChild(){
             document.getElementById('dateOfVaccine').innerHTML = nextDate.getDate()+'/'+(nextDate.getMonth()+1)+'/'+nextDate.getFullYear();
         }
         else{
-            alert('Child Not Found')
+            $('#modal-notification').modal({show:true})
+            document.getElementById('modal-title').innerHTML = 'Failure'
+            document.getElementById('modal-text').innerHTML = 'Child with the given ID not found';
+            document.getElementById('modal-content').classList.add('bg-gradient-danger');
+            document.getElementById('modal-content').classList.remove('bg-gradient-success');
         }
     })
     xhr.send(reqData)
@@ -56,11 +74,19 @@ function markVaccineGiven(){
     var reqData = JSON.stringify({child_id : child_id})
     xhr.addEventListener('load', ()=>{
         if(xhr.response.done){
-            alert("Child's Vaccine given Data has been")
+            $('#modal-notification').modal({show:true})
+            document.getElementById('modal-content').classList.remove('bg-gradient-danger');
+            document.getElementById('modal-content').classList.add('bg-gradient-success');
+            document.getElementById('modal-title').innerHTML = 'Success'
+            document.getElementById('modal-text').innerHTML = 'Vaccine data for the Child has been updated';
             loadChild();
         }
         else{
-            alert("Child not Found")
+            $('#modal-notification').modal({show:true})
+            document.getElementById('modal-title').innerHTML = 'Failure'
+            document.getElementById('modal-text').innerHTML = 'Child with the provided ID not Found';
+            document.getElementById('modal-content').classList.add('bg-gradient-danger');
+            document.getElementById('modal-content').classList.remove('bg-gradient-success');
         }
     })
     xhr.send(reqData)
@@ -77,10 +103,18 @@ function sendMessages(){
     var reqData = JSON.stringify({doctor_id : doctor_id})
     xhr.addEventListener('load', ()=>{
         if(xhr.response.done){
-            alert("All Messages has been sent")
+            $('#modal-notification').modal({show:true})
+            document.getElementById('modal-content').classList.remove('bg-gradient-danger');
+            document.getElementById('modal-content').classList.add('bg-gradient-success');
+            document.getElementById('modal-title').innerHTML = 'Success'
+            document.getElementById('modal-text').innerHTML = 'All messages has been sent';
         }
         else{
-            alert(xhr.response.message)
+            $('#modal-notification').modal({show:true})
+            document.getElementById('modal-title').innerHTML = 'Failure'
+            document.getElementById('modal-text').innerHTML = xhr.response.message;
+            document.getElementById('modal-content').classList.add('bg-gradient-danger');
+            document.getElementById('modal-content').classList.remove('bg-gradient-success');
         }
     })
     xhr.send(reqData)

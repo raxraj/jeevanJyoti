@@ -27,11 +27,11 @@ router.post('/addDoctor',checkAuthenticated, (req, res) => {
 router.post('/addChild', checkAuthenticated, (req, res) => {
     console.log(req.body);
 
-    new childCollection(makeChildParams(req.body)).save((err) => {
+    new childCollection(makeChildParams(req.body)).save((err,docs) => {
         if (err) {
-            res.send(err)
+            res.send({done : false , message : 'Child with same data already Exists'})
         } else {
-            res.send({done: true, message: 'Succesfully added the Child'})
+            res.send({done: true, message: 'Succesfully added the Child' , child_id : docs.child_id})
         }
     })
 })
