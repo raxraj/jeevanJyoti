@@ -58,7 +58,7 @@ router.post('/markVaccineGiven' ,checkAuthenticated,(req,res)=>{
 
 // Functions
 function compareDates(date1, date2) {
-    if ((date1.getDate() === date2.getDate()) && (date1.getMonth() === date2.getMonth()) && (date1.getFullYear() === date2.getFullYear())) {
+    if (((date1.getDate() === date2.getDate()) || (date1.getDate() === date2.getDate()+1) || (date1.getDate() === date2.getDate()+2)  ) && (date1.getMonth() === date2.getMonth()) && (date1.getFullYear() === date2.getFullYear())) {
         return true
     } else {
         return false
