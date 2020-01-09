@@ -93,6 +93,11 @@ app.post("/user/login", passport.authenticate('local', {
     failureFlash:true
 }))
 
+app.get('/user/logout',(req,res)=>{
+    req.logout();
+    res.redirect('/');
+})
+
 // app.post('/user/login',(req,res)=>{
 //     console.log(req.body);
 //     res.send("DONE")

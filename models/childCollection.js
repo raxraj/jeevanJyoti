@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 const childSchema = new Schema({
     child_id: {
         type: String,
-        required: true
+        required: true,
+        unique : true,
+        dropDups : true
     },
     fatherName: {
         type: String,
