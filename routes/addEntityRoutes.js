@@ -5,6 +5,8 @@ var router = express.Router();
 var doctorCollection = require('../models/doctorCollection')
 var childCollection = require('../models/childCollection')
 
+const messageSender = require('../messageSender')
+
 const authCheckers = require('../authFunctions')
 
 const checkAuthenticated = authCheckers.checkAuthenticated;
@@ -31,6 +33,7 @@ router.post('/addChild', checkAuthenticated, (req, res) => {
         if (err) {
             res.send({done : false , message : 'Child with same data already Exists'})
         } else {
+            messageSender('Congratulation, Your child has been registered on Sanjeevani with child ID'+docs.child_id,docs.parentContact)
             res.send({done: true, message: 'Succesfully added the Child' , child_id : docs.child_id})
         }
     })

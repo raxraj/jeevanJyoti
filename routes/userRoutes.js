@@ -5,6 +5,7 @@ const router = express.Router();
 const authCheckers = require('../authFunctions')
 
 const checkAuthenticated = authCheckers.checkAuthenticated;
+const checkUnAuthenticated = authCheckers.checkUnAuthenticated;
 
 router.get('/dashboard', checkAuthenticated, (req, res) => {
     res.render('index.ejs', {doctor_id: req.user.doctor_id})
